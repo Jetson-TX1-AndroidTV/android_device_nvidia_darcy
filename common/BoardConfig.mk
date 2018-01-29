@@ -9,6 +9,7 @@
 
 REFERENCE_DEVICE ?= $(TARGET_DEVICE)
 TARGET_USES_PYTHON_IN_VENDOR := true
+TARGET_TEGRA_VARIANT := shield
 
 TARGET_RELEASETOOLS_EXTENSIONS := device/nvidia/common
 
@@ -21,6 +22,7 @@ endif
 
 # SELinux policy for Android M or N
 BOARD_SEPOLICY_DIRS += device/nvidia/common/sepolicy_$(PLATFORM_VERSION_LETTER_CODE)
+BOARD_SEPOLICY_DIRS += device/nvidia/common/lineage-common)
 
 NV_BUILD_GL_SUPPORT ?= 0
 # EGL_OPENGL_API support requires Android modifications only present in

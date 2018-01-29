@@ -1,4 +1,4 @@
-include vendor/nvidia/build/detectversion.mk
+-include vendor/nvidia/build/detectversion.mk
 PRODUCT_MAKEFILES := \
   $(LOCAL_DIR)/loki_e_lte.mk \
   $(LOCAL_DIR)/loki_e_wifi.mk \

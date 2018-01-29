@@ -56,6 +56,3 @@ type rpx_block_device, dev_type;
 
 # /dev/cy8c-led-boot
 type cy8c_device, dev_type;
-
-# DVB API device node
-type dvb_device, dev_type, mlstrustedobject;

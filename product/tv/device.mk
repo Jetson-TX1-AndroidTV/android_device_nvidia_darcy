@@ -18,9 +18,9 @@ PRODUCT_CHARACTERISTICS := tv
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp
+    persist.sys.usb.config=mtp,adb
 
-DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/../../common/overlay-common/$(PLATFORM_VERSION_LETTER_CODE)
+DEVICE_PACKAGE_OVERLAYS := device/nvidia/platform/t210/overlay_
 
 $(call inherit-product-if-exists, device/google/atv/products/atv_base.mk)
 

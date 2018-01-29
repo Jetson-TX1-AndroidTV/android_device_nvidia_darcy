@@ -82,7 +82,6 @@
 /dev/block/platform/sdhci-tegra(.*)/by-name/RP3		u:object_r:rpx_block_device:s0
 /dev/block/platform/sdhci-tegra(.*)/by-name/LNX		u:object_r:boot_block_device:s0
 /dev/block/platform/sdhci-tegra(.*)/by-name/SOS		u:object_r:recovery_block_device:s0
-/dev/block/platform/sdhci-tegra(.*)/by-name/SMD		u:object_r:bootctrl_block_device:s0
 /dev/block/platform/sdhci-tegra(.*)/by-name/MDA		u:object_r:metadata_block_device:s0
 # AB system partition
 /dev/block/platform/sdhci-tegra(.*)/by-name/LNX-A		u:object_r:boot_block_device:s0
@@ -140,8 +139,6 @@
 /dev/block/zram0			u:object_r:swap_block_device:s0
 # /dev/cy8c-led-boot devices
 /dev/cy8c-led-boot			u:object_r:cy8c_device:s0
-# DVB API device nodes
-/dev/dvb.*				u:object_r:dvb_device:s0
 
 #############################
 # System files
@@ -181,7 +178,7 @@
 (/system)?/vendor/bin/ussrd		u:object_r:ussrd_exec:s0
 /system/bin/ussr_setup.sh		u:object_r:ussr_setup_exec:s0
 # dual wifi
-/system/bin/wpa_supplicant_2		u:object_r:wpa_exec:s0
+/system/bin/wpa_supplicant_2		u:object_r:hal_wifi_supplicant_default_exec:s0
 # frostaudiortp
 /system/bin/frostaudiortp		u:object_r:frostaudiortp_exec:s0
 # pbc
@@ -201,8 +198,6 @@
 /system/bin/setup_fs			u:object_r:setup_fs_exec:s0
 # nv_setupfs.sh
 /system/bin/nv_setupfs.sh               u:object_r:setup_fs_exec:s0
-# make_f2fs
-/system/bin/make_f2fs                   u:object_r:make_f2fs_exec:s0
 # bt restart service
 /system/bin/bt_restart			u:object_r:bt_restart_exec:s0
 # IKEv2 daemon
@@ -248,9 +243,6 @@
 /data/misc/mediaserver(/.*)?		u:object_r:media_data_file:s0
 #GPS
 /data/system/gps(/.*)?			u:object_r:gps_data_file:s0
-# Keyguard wallpaper data
-/data/system/users/[0-9]+/keyguard_wallpaper	u:object_r:wallpaper_file:s0
-/data/system/users/[0-9]+/home_wallpaper	u:object_r:wallpaper_file:s0
 # NVSensor socket file
 /data/misc/nvsipc(/.*)?			u:object_r:nvs_socket:s0
 # HWComposer data
@@ -298,16 +290,16 @@
 /sys/devices/platform/psy_extcon.*/power_supply/ac/online		u:object_r:sysfs_power_supply:s0
 
 # pwm-fan sysfs nodes
-/sys/devices/platform/pwm-fan/pwm_cap   		u:object_r:sysfs_pwm_fan:s0
-/sys/devices/platform/pwm-fan/pwm_state_map		u:object_r:sysfs_pwm_fan:s0
-/sys/devices/platform/pwm-fan/state_cap 		u:object_r:sysfs_pwm_fan:s0
-/sys/devices/platform/pwm-fan/cur_pwm   		u:object_r:sysfs_pwm_fan:s0
-/sys/devices/platform/pwm-fan/pwm_rpm_table		u:object_r:sysfs_pwm_fan:s0
-/sys/devices/platform/pwm-fan/rpm_measured		u:object_r:sysfs_pwm_fan:s0
-/sys/devices/platform/pwm-fan/step_time 	    	u:object_r:sysfs_pwm_fan:s0
-/sys/devices/platform/pwm-fan/tach_enable		u:object_r:sysfs_pwm_fan:s0
-/sys/devices/platform/pwm-fan/target_pwm		u:object_r:sysfs_pwm_fan:s0
-/sys/devices/platform/pwm-fan/temp_control		u:object_r:sysfs_pwm_fan:s0
+/sys/devices/platform/pwm-fan(.*)/pwm_cap   		u:object_r:sysfs_pwm_fan:s0
+/sys/devices/platform/pwm-fan(.*)/pwm_state_map		u:object_r:sysfs_pwm_fan:s0
+/sys/devices/platform/pwm-fan(.*)/state_cap 		u:object_r:sysfs_pwm_fan:s0
+/sys/devices/platform/pwm-fan(.*)/cur_pwm   		u:object_r:sysfs_pwm_fan:s0
+/sys/devices/platform/pwm-fan(.*)/pwm_rpm_table		u:object_r:sysfs_pwm_fan:s0
+/sys/devices/platform/pwm-fan(.*)/rpm_measured		u:object_r:sysfs_pwm_fan:s0
+/sys/devices/platform/pwm-fan(.*)/step_time 	    	u:object_r:sysfs_pwm_fan:s0
+/sys/devices/platform/pwm-fan(.*)/tach_enable		u:object_r:sysfs_pwm_fan:s0
+/sys/devices/platform/pwm-fan(.*)/target_pwm		u:object_r:sysfs_pwm_fan:s0
+/sys/devices/platform/pwm-fan(.*)/temp_control		u:object_r:sysfs_pwm_fan:s0
 
 # cfboost sysfs for pbc access
 /sys/module/input_cfboost/parameters/boost_freq		u:object_r:sysfs_cfboost:s0

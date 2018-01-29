@@ -16,4 +16,4 @@
 BOARD_SEPOLICY_DIRS += device/nvidia/drivers/touchscreen/nvtouch/sepolicy_$(PLATFORM_VERSION_LETTER_CODE)
 
 BOARD_SUPPORT_NVTOUCH_DTA := true
-ADDITIONAL_BUILD_PROPERTIES += persist.touch.solution=nvtouch
+# ADDITIONAL_BUILD_PROPERTIES += persist.touch.solution=nvtouch

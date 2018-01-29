@@ -40,6 +40,9 @@ BOARD_SUPPORT_NVOICE := true
 
 BOARD_SUPPORT_NVAUDIOFX :=true
 
+# RenderScript
+OVERRIDE_RS_DRIVER := libnvRSDriver.so
+
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2147483648
 ifneq ($(filter t210ref%,$(TARGET_PRODUCT)),)
 BOARD_VENDORIMAGE_PARTITION_SIZE := 1610612736
@@ -51,12 +54,18 @@ endif
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_VENDOR := vendor
 
+# LineageOS Kernel Build
+KERNEL_TOOLCHAIN_PREFIX := aarch64-linux-android-
+TARGET_KERNEL_SOURCE := kernel/nvidia/shield
+TARGET_KERNEL_CONFIG := lineageos_t210_defconfig
+BOARD_KERNEL_IMAGE_NAME := zImage
+
 # OTA
-TARGET_RECOVERY_UPDATER_LIBS += libnvrecoveryupdater
-TARGET_RECOVERY_UPDATER_EXTRA_LIBS += libfs_mgr
-TARGET_RECOVERY_UI_LIB := librecovery_ui_default libfscheck
-TARGET_RELEASETOOLS_EXTENSIONS := device/nvidia/common
-TARGET_NVPAYLOAD_UPDATE_LIB := libnvblpayload_updater
+# TARGET_RECOVERY_UPDATER_LIBS += libnvrecoveryupdater
+# TARGET_RECOVERY_UPDATER_EXTRA_LIBS += libfs_mgr
+# TARGET_RECOVERY_UI_LIB := librecovery_ui_default libfscheck
+# TARGET_RELEASETOOLS_EXTENSIONS := device/nvidia/common
+# TARGET_NVPAYLOAD_UPDATE_LIB := libnvblpayload_updater
 
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR ?= device/nvidia/platform/t210/bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -109,8 +118,8 @@ TARGET_USE_NCT := true
 #Display static images for charging
 BOARD_CHARGER_STATIC_IMAGE := true
 
-#Use tegra health HAL library
-BOARD_HAL_STATIC_LIBRARIES := libhealthd.tegra
+# Use tegra health HAL library
+# BOARD_HAL_STATIC_LIBRARIES := libhealthd.tegra
 
 # Enable Paragon filesystem solution.
 BOARD_SUPPORT_PARAGON_FUSE_UFSD := true

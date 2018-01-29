@@ -13,29 +13,6 @@ PRODUCT_AAPT_CONFIG += mdpi hdpi xhdpi
 
 DEVICE_ROOT := device/nvidia
 
-NVFLASH_FILES_PATH := $(DEVICE_ROOT)/tegraflash/t210
-
-PRODUCT_COPY_FILES += \
-    $(NVFLASH_FILES_PATH)/eks_nokey.dat:eks.dat \
-    $(NVFLASH_FILES_PATH)/flash_t210_android_sdmmc.xml:flash_t210_android_sdmmc.xml \
-    $(NVFLASH_FILES_PATH)/flash_t210_android_sata.xml:flash_t210_android_sata.xml \
-    $(NVFLASH_FILES_PATH)/flash_t210_android_sata_fb.xml:flash_t210_android_sata_fb.xml \
-    $(NVFLASH_FILES_PATH)/flash_t210_android_sdmmc_diag.xml:flash_t210_android_sdmmc_diag.xml \
-    $(NVFLASH_FILES_PATH)/flash_t210_android_sata_diag.xml:flash_t210_android_sata_diag.xml \
-    $(NVFLASH_FILES_PATH)/flash_t210_android_sdmmc_fb_diag.xml:flash_t210_android_sdmmc_fb_diag.xml \
-    $(NVFLASH_FILES_PATH)/flash_t210_android_sata_fb_diag.xml:flash_t210_android_sata_fb_diag.xml \
-    $(NVFLASH_FILES_PATH)/partition_tables/darcy/flash_t210_darcy_android_sdmmc.xml:flash_t210_darcy_android_sdmmc.xml \
-    $(NVFLASH_FILES_PATH)/flash_t210_android_sdmmc_fb_ab.xml:flash_t210_android_sdmmc_fb_ab.xml \
-    $(call add-to-product-copy-files-if-exists, device/nvidia/tegraflash/t210/rp4_binaries/rp4.bin:rp4.bin)
-
-ifneq ($(filter t210ref%,$(TARGET_PRODUCT)),)
-PRODUCT_COPY_FILES += \
-    $(NVFLASH_FILES_PATH)/partition_tables/jetson/flash_t210_jetson_android_sdmmc.xml:flash_t210_android_sdmmc_fb.xml
-else
-PRODUCT_COPY_FILES += \
-    $(NVFLASH_FILES_PATH)/flash_t210_android_sdmmc_fb.xml:flash_t210_android_sdmmc_fb.xml
-endif
-
 NVFLASH_FILES_PATH :=
 
 PRODUCT_COPY_FILES += \
@@ -184,10 +161,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/power.jetson_e.rc:system/etc/power.jetson_cv.rc \
     $(LOCAL_PATH)/power.jetson_e.rc:system/etc/power.t18x-interposer.rc
 
-# Face detection model
-PRODUCT_COPY_FILES += \
-    vendor/nvidia/tegra/core/include/ft/model_frontalface.xml:system/etc/model_frontal.xml
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/../../common/cluster:system/bin/cluster \
     $(LOCAL_PATH)/../../common/cluster_get.sh:system/bin/cluster_get.sh \
@@ -199,58 +172,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/enctune.conf:system/etc/enctune.conf
 
-ifeq ($(wildcard vendor/nvidia/tegra/core-private),vendor/nvidia/tegra/core-private)
-    BCMBINARIES_PATH := vendor/nvidia/tegra/3rdparty/bcmbinaries
-else
-    BCMBINARIES_PATH := vendor/nvidia/tegra/prebuilt/t210/3rdparty/bcmbinaries
-endif
-
-#Product-specific wifi firmware/nvram files
-ifeq ($(findstring loki_e, $(TARGET_PRODUCT)), loki_e)
-    PRODUCT_COPY_FILES += \
-        $(BCMBINARIES_PATH)/bcm4354a1/wlan/atv/nvram_loki_e_4354.txt:system/etc/nvram_loki_e_4354.txt \
-        $(BCMBINARIES_PATH)/bcm4354a1/wlan/atv/nvram_loki_e_antenna_tuned_4354.txt:system/etc/nvram_loki_e_antenna_tuned_4354.txt \
-        $(call add-to-product-copy-files-if-exists, vendor/nvidia/internal/t210/3rdparty/bcmbinaries/bcm4354a1/wlan/sdio-ag-p2p-pno-aoe-pktfilter-keepalive-sr-mchan-proptxstatus-ampduhostreorder-lpc-wl11u-txbf-pktctx-okc-tdls-ccx-ve-mfp-ltecxgpio.bin:$(TARGET_COPY_OUT_VENDOR)/firmware/fw_bcmdhd.bin)
-else ifeq ($(findstring foster_e, $(TARGET_PRODUCT)), foster_e)
-    PRODUCT_COPY_FILES += \
-        $(BCMBINARIES_PATH)/bcm4354a1/wlan/atv/nvram_foster_e_4354.txt:system/etc/nvram_foster_e_4354.txt \
-        $(BCMBINARIES_PATH)/bcm4354a1/wlan/atv/nvram_foster_e_antenna_tuned_4354.txt:system/etc/nvram_foster_e_antenna_tuned_4354.txt \
-        $(BCMBINARIES_PATH)/bcm4354a1/wlan/atv/sdio-ag-p2p-pno-aoe-pktfilter-keepalive-sr-mchan-pktctx-proptxstatus-ampduhostreorder-lpc-pwropt-txbf-wl11u-mfp-tdls-ltecx-wfds-mchandump-atv.bin:$(TARGET_COPY_OUT_VENDOR)/firmware/fw_bcmdhd.bin
-else ifeq ($(findstring darcy, $(TARGET_PRODUCT)), darcy)
-    PRODUCT_COPY_FILES += \
-        $(BCMBINARIES_PATH)/bcm4354a1/wlan/atv/nvram_darcy_a00.txt:system/etc/nvram_darcy_a00.txt \
-        $(BCMBINARIES_PATH)/bcm4354a1/wlan/atv/sdio-ag-p2p-pno-aoe-pktfilter-keepalive-sr-mchan-pktctx-proptxstatus-ampduhostreorder-lpc-pwropt-txbf-wl11u-mfp-tdls-ltecx-wfds-mchandump-atv.bin:$(TARGET_COPY_OUT_VENDOR)/firmware/fw_bcmdhd.bin
-        ifeq ($(TARGET_BUILD_VARIANT), eng)
-            PRODUCT_COPY_FILES += \
-                $(BCMBINARIES_PATH)/bcm4354a1/wlan/atv/nvram_foster_e_4354.txt:system/etc/nvram_foster_e_4354.txt \
-                $(BCMBINARIES_PATH)/bcm4354a1/wlan/atv/nvram_foster_e_antenna_tuned_4354.txt:system/etc/nvram_foster_e_antenna_tuned_4354.txt
-        endif
-else ifeq ($(findstring hawkeye, $(TARGET_PRODUCT)), hawkeye)
-    PRODUCT_COPY_FILES += \
-        $(BCMBINARIES_PATH)/bcm4354a1/wlan/tab/nvram_hawkeye_4354.txt:system/etc/nvram_hawkeye_4354.txt \
-        $(BCMBINARIES_PATH)/bcm4354a1/wlan/tab/sdio-ag-p2p-pno-aoe-pktfilter-keepalive-sr-mchan-pktctx-proptxstatus-ampduhostreorder-lpc-pwropt-txbf-wl11u-mfp-tdls-ltecx-wfds-mchandump-dfsago-tab.bin:$(TARGET_COPY_OUT_VENDOR)/firmware/fw_bcmdhd.bin
-else ifeq ($(findstring t210ref, $(TARGET_PRODUCT)), t210ref)
-    #copy T210 ERS files as well if repo exists
-    PRODUCT_COPY_FILES += \
-        $(BCMBINARIES_PATH)/bcm4354a1/wlan/emb/nvram_jetsonE_cv_4354.txt:system/etc/nvram_jetsonE_cv_4354.txt \
-        $(call add-to-product-copy-files-if-exists, vendor/nvidia/internal/t210/3rdparty/bcmbinaries/bcm4354a1/wlan/sdio-ag-p2p-pno-aoe-pktfilter-keepalive-sr-mchan-proptxstatus-ampduhostreorder-lpc-wl11u-txbf-pktctx-okc-tdls-ccx-ve-mfp-ltecxgpio.bin:$(TARGET_COPY_OUT_VENDOR)/firmware/bcm4354/fw_bcmdhd.bin) \
-        $(call add-to-product-copy-files-if-exists, vendor/nvidia/internal/t210/3rdparty/bcmbinaries/bcm4354a1/wlan/nvram_4354.txt:system/etc/nvram_4354.txt)
-    ifeq ($(wildcard vendor/nvidia/tegra/core-private),vendor/nvidia/tegra/core-private)
-        PRODUCT_COPY_FILES += $(BCMBINARIES_PATH)/bcm4354a1/wlan/emb/sdio-ag-p2p-pno-aoe-pktfilter-keepalive-sr-mchan-pktctx-proptxstatus-ampduhostreorder-lpc-pwropt-txbf-wl11u-mfp-tdls-ltecx-wfds-mchandump-emb.bin:$(TARGET_COPY_OUT_VENDOR)/firmware/fw_bcmdhd.bin
-    else
-        PRODUCT_COPY_FILES += $(BCMBINARIES_PATH)/bcm4354a1/wlan/emb/sdio-ag-p2p-pno-aoe-pktfilter-keepalive-sr-mchan-pktctx-proptxstatus-ampduhostreorder-lpc-pwropt-txbf-wl11u-mfp-tdls-ltecx-wfds-mchandump-emb.bin:$(TARGET_COPY_OUT_VENDOR)/firmware/fw_bcmdhd.bin
-    endif
-else
-    PRODUCT_COPY_FILES += \
-        $(call add-to-product-copy-files-if-exists, vendor/nvidia/internal/t210/3rdparty/bcmbinaries/bcm4354a1/wlan/sdio-ag-p2p-pno-aoe-pktfilter-keepalive-sr-mchan-proptxstatus-ampduhostreorder-lpc-wl11u-txbf-pktctx-okc-tdls-ccx-ve-mfp-ltecxgpio.bin:$(TARGET_COPY_OUT_VENDOR)/firmware/bcm4354/fw_bcmdhd.bin) \
-        $(call add-to-product-copy-files-if-exists, vendor/nvidia/internal/t210/3rdparty/bcmbinaries/bcm4354a1/wlan/nvram_4354.txt:system/etc/nvram_4354.txt)
-endif
-
-#BT Firmware file for BCM4354
-PRODUCT_COPY_FILES += $(BCMBINARIES_PATH)/bcm4354a1/bluetooth/BCM4354_003.001.012.0163.0000_Nvidia_NV54_TEST_ONLY.hcd:system/etc/firmware/bcm4350.hcd
-
-BCMBINARIES_PATH :=
-
 PRODUCT_COPY_FILES += \
     $(call add-to-product-copy-files-if-exists, vendor/nvidia/tegra/3rdparty/broadcom/gps/bin/bcm4752_next_64/glgps_nvidiategraandroid:system/bin/glgps_nvidiaTegra2android) \
     $(call add-to-product-copy-files-if-exists, vendor/nvidia/tegra/3rdparty/broadcom/gps/bin/bcm4752_next_64/gps.nvidiategraandroid.so:system/lib64/hw/gps.brcm.so)
@@ -260,8 +181,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/../../common/miracast/com.nvidia.miracast.xml:system/etc/permissions/com.nvidia.miracast.xml
 
 # NvBlit JNI library
-PRODUCT_COPY_FILES += \
-    vendor/nvidia/tegra/graphics-partner/android/frameworks/Graphics/com.nvidia.graphics.xml:system/etc/permissions/com.nvidia.graphics.xml
+# PRODUCT_COPY_FILES += \
+#    vendor/nvidia/tegra/graphics-partner/android/frameworks/Graphics/com.nvidia.graphics.xml:system/etc/permissions/com.nvidia.graphics.xml
 
 ifneq ($(filter foster_e% darcy darcy_ironfist,$(TARGET_PRODUCT)),)
 PRODUCT_COPY_FILES += $(call add-to-product-copy-files-if-exists, vendor/nvidia/tegra/tnspec_data/t210/tnspec_foster.json:tnspec.json)

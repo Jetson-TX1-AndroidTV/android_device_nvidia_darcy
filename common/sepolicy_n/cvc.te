@@ -16,7 +16,7 @@ type cvc, domain;
 type cvc_exec, exec_type, file_type;
 init_daemon_domain(cvc)
 
-allow cvc self:netlink_socket create_socket_perms;
+#allow cvc self:netlink_socket create_socket_perms;
 allow cvc cvc_data_file:dir rw_dir_perms;
 allow cvc cvc_data_file:file create_file_perms;
 allow cvc sysfs_cvc:dir r_dir_perms;

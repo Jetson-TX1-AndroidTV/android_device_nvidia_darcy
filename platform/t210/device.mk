@@ -4,21 +4,24 @@
 #
 # 32-bit specific product settings
 
+TARGET_SCREEN_HEIGHT := 1920
+TARGET_SCREEN_WIDTH := 1080
+
 $(call inherit-product-if-exists, frameworks/base/data/videos/VideoPackage2.mk)
 $(call inherit-product, device/nvidia/platform/t210/device-common.mk)
-$(call inherit-product, vendor/nvidia/tegra/core/android/t210/nvflash.mk)
-$(call inherit-product, vendor/nvidia/tegra/core/android/touch/raydium.mk)
-$(call inherit-product, vendor/nvidia/tegra/core/android/touch/sharp.mk)
-$(call inherit-product, vendor/nvidia/tegra/core/android/touch/nvtouch.mk)
+#$(call inherit-product, vendor/nvidia/tegra/core/android/t210/nvflash.mk)
+#$(call inherit-product, vendor/nvidia/tegra/core/android/touch/raydium.mk)
+#$(call inherit-product, vendor/nvidia/tegra/core/android/touch/sharp.mk)
+#$(call inherit-product, vendor/nvidia/tegra/core/android/touch/nvtouch.mk)
 $(call inherit-product, device/nvidia/platform/t210/motionq/motionq.mk)
-$(call inherit-product, vendor/nvidia/tegra/core/android/multimedia/base.mk)
-$(call inherit-product, vendor/nvidia/tegra/core/android/multimedia/firmware.mk)
-$(call inherit-product, vendor/nvidia/tegra/core/android/camera/full.mk)
-$(call inherit-product, vendor/nvidia/tegra/core/android/services/nvcpl.mk)
-$(call inherit-product, vendor/nvidia/tegra/core/android/services/edid.mk)
+#$(call inherit-product, vendor/nvidia/tegra/core/android/multimedia/base.mk)
+#$(call inherit-product, vendor/nvidia/tegra/core/android/multimedia/firmware.mk)
+#$(call inherit-product, vendor/nvidia/tegra/core/android/camera/full.mk)
+#$(call inherit-product, vendor/nvidia/tegra/core/android/services/nvcpl.mk)
+#$(call inherit-product, vendor/nvidia/tegra/core/android/services/edid.mk)
 $(call inherit-product, vendor/google/widevine/widevine.mk)
-$(call inherit-product, vendor/nvidia/shieldtech/common/shieldtech.mk)
 $(call inherit-product, vendor/google/atv/atv-common.mk)
+$(call inherit-product, vendor/nvidia/shield/foster.mk)
 
 #enable Widevine drm
 PRODUCT_PROPERTY_OVERRIDES += drm.service.enabled=true
@@ -80,6 +83,20 @@ PRODUCT_PROPERTY_OVERRIDES += drm.service.enabled=true
 PRODUCT_PACKAGES += \
     liboemcrypto \
     libdrmdecrypt
+
+PRODUCT_PACKAGES += \
+    camera.device@3.2-impl \
+    android.hardware.camera.provider@2.4-impl
+
+PRODUCT_PACKAGES += \
+    android.hardware.gnss@1.0-impl
+
+PRODUCT_PACKAGES += \
+    android.hardware.light@2.0-impl
+
+# HIDL
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/manifest.xml:vendor/manifest.xml
 
 PRODUCT_RUNTIMES := runtime_libart_default
 
@@ -151,7 +168,8 @@ PRODUCT_PACKAGES += gps.symlink
 
 # Leanback Customizer
 PRODUCT_PACKAGES += \
-    LeanbackCustomize
+    TvSettings \
+    TV
 
 # Extra tools from CM/LOS
 PRODUCT_PACKAGES += \

@@ -8,7 +8,7 @@ $(call inherit-product, device/nvidia/product/tv/device.mk)
 $(call inherit-product, device/nvidia/platform/t210/device.mk)
 
 ## Install GMS if available
-$(call inherit-product-if-exists, 3rdparty/google/gms-apps/tv/gms.mk)
+$(call inherit-product-if-exists, 3rdparty/google/gms-apps/tv64/gms.mk)
 PRODUCT_PROPERTY_OVERRIDES += \
         ro.com.google.clientidbase=android-nvidia
 
@@ -91,7 +91,7 @@ $(call inherit-product-if-exists, vendor/nvidia/loki/skus/tegrazone_next.mk)
 
 ## eks2 data blob
 PRODUCT_COPY_FILES += \
-    $(call add-to-product-copy-files-if-exists, vendor/nvidia/tegra/ote/nveks2/data/eks2_darcy.dat:vendor/app/eks2/eks2.dat)
+    $(call add-to-product-copy-files-if-exists, device/nvidia/platform/t210/eks2/eks2_darcy.dat:vendor/app/eks2/eks2.dat)
 
 ## Clean local variables
 _product_name :=

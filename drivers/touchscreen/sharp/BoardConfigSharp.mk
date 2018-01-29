@@ -16,7 +16,7 @@
 BOARD_SEPOLICY_DIRS += device/nvidia/drivers/touchscreen/sharp/sepolicy_$(PLATFORM_VERSION_LETTER_CODE)
 
 # PRODUCT_PROPERTY_OVERRIDES is not working from here.
-ADDITIONAL_BUILD_PROPERTIES += persist.tch.tap2wake=0
+# ADDITIONAL_BUILD_PROPERTIES += persist.tch.tap2wake=0
 
 # create touch init.rc according touchvendor id from bootloader/nct
 PRODUCT_COPY_FILES += \
